@@ -1,14 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
+
+import FriendsListScreen from '../screens/Chats/FriendsListScreen';
+import ChatScreen from '../screens/Chats/ChatScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Navigation = () => {
+ 
+const Stack = createNativeStackNavigator();
   return (
-    <View>
-      <Text>Navigation</Text>
-    </View>
-  )
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="chatList" component={FriendsListScreen}  options={{headerShown:false}} />
+          <Stack.Screen name="chatScreen" component={ChatScreen}  options={{ headerShown: false }}/>
+          {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
 }
 
-export default Navigation
+export default Navigation;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

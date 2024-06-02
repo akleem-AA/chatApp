@@ -1,9 +1,12 @@
 // src/FriendsListScreen.js
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, FlatList, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import { View, FlatList, TouchableOpacity, Text, Image, StyleSheet, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const FriendsListScreen = ({ navigation }) => {
+const FriendsListScreen = () => {
+  const navigation = useNavigation();
   const friends = [
     { id: 1, name: 'Friend 1', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1025px-Cat03.jpg' },
     { id: 2, name: 'Friend 2', image: 'https://placekitten.com/50/51' },
@@ -12,7 +15,7 @@ const FriendsListScreen = ({ navigation }) => {
   ];
 
   const navigateToChat = (friend) => {
-    navigation.navigate('ChatScreen', { friend });
+    navigation.navigate('chatScreen', { friend });
   };
 
   const renderFriend = ({ item }) => (
@@ -32,6 +35,9 @@ const FriendsListScreen = ({ navigation }) => {
   };
 
   return (
+    <SafeAreaView style={styles.safeArea}>
+    <StatusBar barStyle="light-content"/>
+
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Let's Chat with Friends</Text>
@@ -45,10 +51,15 @@ const FriendsListScreen = ({ navigation }) => {
         <Icon name="chat" size={30} color="#ffffff" />
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#128C7E',
+  },
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
@@ -95,6 +106,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 15,
   },
+  
 });
+
+
 
 export default FriendsListScreen;

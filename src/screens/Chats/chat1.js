@@ -23,7 +23,6 @@ import ActionSheet from 'react-native-actionsheet';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableRipple } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Message from '../../components/Message';
 
 const socket = io('http://your-server-url'); // Replace with your actual server URL
 
@@ -187,7 +186,7 @@ const handleCameraLaunch = async () => {
   const renderMessage = ({ item }) => {
     return (
       <TouchableRipple
-        style={[styles.feedbackContainer,{borderWidth:1}]}
+        style={styles.feedbackContainer}
         borderless={false}
         onLongPress={() => handleLongPress(item)}>
         <View style={item.fromMe ? styles.messageFromMe : styles.messageFromFriend}>
@@ -261,7 +260,7 @@ const handleCameraLaunch = async () => {
             ref={flatListRef}
             data={messages}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={Message}
+            renderItem={renderMessage}
             contentContainerStyle={styles.messageContainer}
             onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
             onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
