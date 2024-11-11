@@ -2,18 +2,22 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { TouchableRipple } from 'react-native-paper';
 
-const Message = ({ item }) => {
+const Message = ({ item,onLongPress }) => {
 
     const formatTimestamp = (timestamp) => {
         const options = { hour: 'numeric', minute: '2-digit', hour12: true };
         return new Intl.DateTimeFormat('en-US', options).format(timestamp);
     };
 
+  
+    
+     
+    
     return (
         <TouchableRipple
             style={[styles.feedbackContainer]}
             borderless={false}
-            onLongPress={() => handleLongPress(item)}>
+            onLongPress={() => onLongPress(item)}>
             <View style={[item.fromMe ? styles.messageFromMe : styles.messageFromFriend, styles.messageBubble]}>
                 {item.image ? (
                     <View style={styles.imageContainer}>
@@ -39,6 +43,8 @@ export default Message;
 const styles = StyleSheet.create({
     feedbackContainer: {
         marginVertical: 5,
+        // borderWidth:1,
+        // maxWidth:'100%'
     },
     messageBubble: {
         padding: 10,

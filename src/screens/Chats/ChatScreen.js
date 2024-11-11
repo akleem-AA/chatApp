@@ -48,6 +48,12 @@ const ChatScreen = ({ route }) => {
       fromMe: false,
       timestamp: new Date(),
     },
+    {
+      id: 21,
+      text: "Let's connect with server so that we can chat one to one by using our platform",
+      fromMe: false,
+      timestamp: new Date(),
+    },
   ]);
 
   const [message, setMessage] = useState('');
@@ -261,7 +267,10 @@ const handleCameraLaunch = async () => {
             ref={flatListRef}
             data={messages}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={Message}
+            // renderItem={Message}
+            renderItem={({ item }) => (
+              <Message item={item} onLongPress={handleLongPress} />
+          )}
             contentContainerStyle={styles.messageContainer}
             onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
             onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
