@@ -119,15 +119,6 @@ const ChatScreen = ({ route }) => {
     }
   };
 
-  // const handleCameraLaunch = () => {
-  //   const options = {
-  //     mediaType: 'photo',
-  //     includeBase64: false,
-  //     maxHeight: 2000,
-  //     maxWidth: 2000,
-  //   };
-  //   launchCamera(options, (response) => handleImagePickerResponse(response, true));
-  // };
 
 const handleCameraLaunch = async () => {
   if (Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS && !Platform.isMacCatalyst) {
@@ -190,27 +181,7 @@ const handleCameraLaunch = async () => {
     }
   };
 
-  const renderMessage = ({ item }) => {
-    return (
-      <TouchableRipple
-        style={[styles.feedbackContainer,{borderWidth:1}]}
-        borderless={false}
-        onLongPress={() => handleLongPress(item)}>
-        <View style={item.fromMe ? styles.messageFromMe : styles.messageFromFriend}>
-          {item.image ? (
-            <Image
-              source={{ uri: item.image }}
-              style={item.fromMe ? styles.imageMessageFromMe : styles.imageMessageFromFriend}
-            />
-          ) : (
-            <Text style={[styles.messageText, !item.fromMe ? { color: 'black' } : { backgroundColor: '#075e54' }]}>{item.text}</Text>
-          )}
-
-          <Text style={styles.timestampText}>{formatTimestamp(item.timestamp)}</Text>
-        </View>
-      </TouchableRipple>
-    );
-  };
+  
 
   const handleLongPress = (item) => {
     Alert.alert(
@@ -229,10 +200,7 @@ const handleCameraLaunch = async () => {
     setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== item.id));
   };
 
-  const formatTimestamp = (timestamp) => {
-    const options = { hour: 'numeric', minute: '2-digit', hour12: true };
-    return new Intl.DateTimeFormat('en-US', options).format(timestamp);
-  };
+ 
 
 
   return (

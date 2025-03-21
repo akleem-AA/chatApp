@@ -7,11 +7,7 @@ import {
   Text,
   StyleSheet,
   Image,
-  PermissionsAndroid,
-  TouchableWithoutFeedback,
   Alert,
-  TouchableHighlight,
-  KeyboardAvoidingView,
   StatusBar,
   Platform,
  
@@ -26,7 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const socket = io('http://your-server-url'); // Replace with your actual server URL
 
-const ChatScreen = ({ route }) => {
+const ChatScreen1 = ({ route }) => {
   const navigation = useNavigation();
   const { friend } = route?.params || { name: 'Receiver' };
 
@@ -70,7 +66,6 @@ const ChatScreen = ({ route }) => {
   }, []);
 
   const sendMessage = () => {
-    // Check if the message is empty
     if (!message.trim()) {
       return;
     }
@@ -112,18 +107,9 @@ const ChatScreen = ({ route }) => {
     }
   };
 
-  // const handleCameraLaunch = () => {
-  //   const options = {
-  //     mediaType: 'photo',
-  //     includeBase64: false,
-  //     maxHeight: 2000,
-  //     maxWidth: 2000,
-  //   };
-  //   launchCamera(options, (response) => handleImagePickerResponse(response, true));
-  // };
 
 const handleCameraLaunch = async () => {
-  if (Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS && !Platform.isMacCatalyst) {
+  if (Platform.OS === 'ios' && !Platform.isPad && !Platform.isTV && !Platform.isMacCatalyst) {
     const options = {
       mediaType: 'photo',
       includeBase64: false,
@@ -186,22 +172,26 @@ const handleCameraLaunch = async () => {
   const renderMessage = ({ item }) => {
     return (
       <TouchableRipple
-        style={styles.feedbackContainer}
-        borderless={false}
-        onLongPress={() => handleLongPress(item)}>
-        <View style={item.fromMe ? styles.messageFromMe : styles.messageFromFriend}>
-          {item.image ? (
-            <Image
-              source={{ uri: item.image }}
-              style={item.fromMe ? styles.imageMessageFromMe : styles.imageMessageFromFriend}
-            />
-          ) : (
-            <Text style={[styles.messageText, !item.fromMe ? { color: 'black' } : { backgroundColor: '#075e54' }]}>{item.text}</Text>
-          )}
-
-          <Text style={styles.timestampText}>{formatTimestamp(item.timestamp)}</Text>
-        </View>
-      </TouchableRipple>
+            style={[styles.feedbackContainer]}
+            borderless={false}
+            onLongPress={() => handleLongPress(item)}>
+            <View style={[item.fromMe ? styles.messageFromMe : styles.messageFromFriend, styles.messageBubble]}>
+                {item.image ? (
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={{ uri: item.image }}
+                            style={styles.imageMessage}
+                        />
+                        <Text style={[styles.timestampText, styles.timestampTextImage]}>{formatTimestamp(item.timestamp)}</Text>
+                    </View>
+                ) : (
+                    <>
+                        <Text style={styles.messageText}>{item.text}</Text>
+                        <Text style={styles.timestampText}>{formatTimestamp(item.timestamp)}</Text>
+                    </>
+                )}
+            </View>
+        </TouchableRipple>
     );
   };
 
@@ -232,11 +222,6 @@ const handleCameraLaunch = async () => {
     <>
   
      <SafeAreaView style={styles.safeArea}>
-      {/* <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0} 
-      >  */}
       <StatusBar  barStyle="light-content"/>
         <View style={styles.container}>
           <View style={styles.header}>
@@ -289,7 +274,6 @@ const handleCameraLaunch = async () => {
             visible={bottomSheetVisible}
           />
         </View>
-       {/* </KeyboardAvoidingView> */}
   </SafeAreaView>
   </>
 
@@ -305,10 +289,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f0f0f0',
   },
-  feedbackContainer: {
-    // width: '50%', // Adjust the width as needed
-    // alignSelf: 'center',
-  },
+
   header: {
     backgroundColor: '#075e54',
     flexDirection: 'row',
@@ -328,41 +309,7 @@ const styles = StyleSheet.create({
   messageContainer: {
     padding: 10,
   },
-  messageFromMe: {
-    alignSelf: 'flex-end',
-    marginVertical: 5,
-    maxWidth: '80%',
-    
-  },
-  messageFromFriend: {
-    alignSelf: 'flex-start',
-    marginVertical: 5,
-    maxWidth: '80%',
-  },
-  messageText: {
-    color: '#ffffff',
-    padding: 10,
-    borderRadius: 10,
-    // backgroundColor: '#075e54',
-    backgroundColor: '#ece5dd'
-  },
-  imageMessageFromMe: {
-    width: 200,
-    height: 200,
-    borderRadius: 8,
-    borderWidth: 1,
-  },
-  imageMessageFromFriend: {
-    width: 200,
-    height: 200,
-    borderRadius: 8,
-    borderWidth: 1,
-  },
-  timestampText: {
-    fontSize: 12,
-    color: '#777',
-    marginTop: 5,
-  },
+
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -393,5 +340,51 @@ const styles = StyleSheet.create({
   sendButtonText: {
     color: '#ffffff',
   },
+  feedbackContainer: {
+    marginVertical: 5,
+    // borderWidth:1,
+    // maxWidth:'100%'
+},
+messageBubble: {
+    padding: 10,
+    borderRadius: 10,
+    maxWidth: '80%',
+},
+messageFromMe: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#dcf8c6',
+},
+messageFromFriend: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#ffffff',
+    borderColor: '#075e54',
+    // borderWidth: 1,
+},
+messageText: {
+    color: '#000000',
+},
+imageContainer: {
+    position: 'relative',
+},
+imageMessage: {
+    width: 200,
+    height: 200,
+    borderRadius: 8,
+},
+timestampText: {
+    fontSize: 12,
+    color: '#777',
+    marginTop: 5,
+    alignSelf: 'flex-end',
+},
+timestampTextImage: {
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
+    // backgroundColor: 'rgba(255, 255, 255, 255)',
+    paddingHorizontal: 5,
+    borderRadius: 3,
+    color:'white'
+},
 });
-export default ChatScreen;
+export default ChatScreen1;

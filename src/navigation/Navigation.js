@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import FriendsListScreen from '../screens/Chats/FriendsListScreen';
 import ChatScreen from '../screens/Chats/ChatScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ChatScreen1 from '../screens/Chats/chat1';
 
 const Navigation = () => {
  
@@ -15,7 +16,9 @@ const Stack = createNativeStackNavigator();
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="chatList" component={FriendsListScreen}  options={{headerShown:false}} />
-          <Stack.Screen name="chatScreen" component={ChatScreen}  options={{ headerShown: false }}/>
+          <Stack.Screen name="chatScreen" component={ChatScreen1}  options={{ headerShown: false }}/>
+          {/* <Stack.Screen name="chatScreen" component={ChatScreen}  options={{ headerShown: false }}/> */}
+
           {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>
