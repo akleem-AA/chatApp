@@ -109,7 +109,6 @@ const ChatScreen = ({ route }) => {
 
   const handleBottomSheetSelection = (index) => {
     setBottomSheetVisible(false);
-
     if (index === 0) {
       // Take Photo
       handleCameraLaunch();
@@ -231,6 +230,7 @@ const handleCameraLaunch = async () => {
               <Text style={styles.headerText}>{friend?.name || 'My Friend'}</Text>
             </View>
           </View>
+
           <FlatList
             ref={flatListRef}
             data={messages}
@@ -243,6 +243,7 @@ const handleCameraLaunch = async () => {
             onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
             onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
           />
+
           <View style={styles.inputContainer}>
             <TouchableOpacity style={styles.uploadIcon} onPress={pickImage}>
               <Icon name="photo-camera" size={24} color="#000000" />
@@ -257,6 +258,7 @@ const handleCameraLaunch = async () => {
               <Text style={styles.sendButtonText}>Send</Text>
             </TouchableOpacity>
           </View>
+          
           <ActionSheet
             ref={actionSheetRef}
             title={'Select a photo'}

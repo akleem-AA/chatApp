@@ -36,21 +36,21 @@ const FriendsListScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-    <StatusBar barStyle="light-content"/>
+      <StatusBar barStyle="light-content" />
 
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Let's Chat with Friends</Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Let's Chat with Friends</Text>
+        </View>
+        <FlatList
+          data={friends}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderFriend}
+        />
+        <TouchableOpacity onPress={() => navigation.navigate('VideoCallScreen')} style={styles.chatIcon}>
+          <Icon name="chat" size={30} color="#ffffff" />
+        </TouchableOpacity>
       </View>
-      <FlatList
-        data={friends}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderFriend}
-      />
-      <TouchableOpacity style={styles.chatIcon}>
-        <Icon name="chat" size={30} color="#ffffff" />
-      </TouchableOpacity>
-    </View>
     </SafeAreaView>
   );
 };
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 15,
   },
-  
+
 });
 
 
